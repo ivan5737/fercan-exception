@@ -3,7 +3,7 @@ package com.fercan.exception.constants;
 /**
  * Enum class that contains the error types.
  * 
- * @author ivan
+ * @author Gonzalo Ivan Lopez
  *
  */
 public enum ErrorCause {

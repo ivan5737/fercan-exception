@@ -4,7 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import com.fercan.exception.constants.ErrorCause;
+import lombok.Getter;
 
+/**
+ * 
+ * @author Gonzalo Ivan Lopez
+ *
+ */
+@Getter
 public class FercanException extends RuntimeException {
 
   private static final long serialVersionUID = 957746124409166585L;
@@ -29,26 +36,6 @@ public class FercanException extends RuntimeException {
         .append(System.currentTimeMillis()).toString();
   }
 
-  public String getCodigo() {
-    return codigo;
-  }
-
-  public String getMensaje() {
-    return mensaje;
-  }
-
-  public String getDetalle() {
-    return detalle;
-  }
-
-  public ErrorCause getCausa() {
-    return causa;
-  }
-
-  public String getUuid() {
-    return uuid;
-  }
-
   public Map<String, String> getResponse() {
     Map<String, String> response = new HashMap<>();
     response.put("error", this.mensaje);
@@ -60,8 +47,9 @@ public class FercanException extends RuntimeException {
 
   @Override
   public String toString() {
-    return "FercanException [codigo=" + codigo + ", mensaje=" + mensaje + ", detalle=" + detalle
-        + ", causa=" + causa + ", uuid=" + uuid + "]";
+    return new StringBuilder().append("FercanException [codigo=").append(codigo)
+        .append(", mensaje=").append(mensaje).append(", detalle=").append(detalle)
+        .append(", causa=").append(causa).append(", uuid=").append(uuid).append("]").toString();
   }
 
 }
