@@ -5,10 +5,10 @@ import java.io.StringWriter;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.TransientDataAccessResourceException;
-import com.fercan.exception.constants.ErrorCause;
 import com.fercan.exception.constants.ErrorMsg;
 
 /**
+ * Exception handler class form the Fercan Web Services.
  * 
  * @author Gonzalo Ivan Lopez
  *
@@ -35,16 +35,12 @@ public class ExceptionHandler extends RuntimeException {
   }
 
   public FercanException getFercanException(Exception e, ErrorMsg error) {
-    return getFercanException(e, error, error.getCausa());
+    return new FercanException(error.getCodigo(), error.getMensaje(), getStackTrace(e),
+        error.getCausa());
   }
 
-  private FercanException getFercanException(Exception e, ErrorMsg error, ErrorCause causa) {
-    return new FercanException(error.getCodigo(), error.getMensaje(), getStackTrace(e), causa);
-  }
-
-  public FercanException getFercanException(Exception e, String codigo, String mensaje,
-      ErrorCause causa) {
-    return new FercanException(codigo, mensaje, getStackTrace(e), causa);
+  public FercanException getFercanException(Exception e, ErrorMsg error, String message) {
+    return new FercanException(error.getCodigo(), message, getStackTrace(e), error.getCausa());
   }
 
   private static ErrorMsg getMensaje(Exception e) {
