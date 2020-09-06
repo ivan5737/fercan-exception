@@ -38,7 +38,7 @@ public enum ErrorMsg {
       "Se ha enviado un id de llave foranea que no existe para el campo (%s).",
       ErrorCause.REGLANEGOCIO),
   ERROR_ID_PREGUNTA("0016",
-      "El id de pregunta (%d) que se ha enviado desde el servicio es incorrecto.",
+      "El id de pregunta (%s) que se ha enviado desde el servicio es incorrecto.",
       ErrorCause.REGLANEGOCIO),
   ERROR_CORREO_DUPLICADO("0020", "Error, ya existe un usuario con el correo ingresado.",
       ErrorCause.REGLANEGOCIO),
