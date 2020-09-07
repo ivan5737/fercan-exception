@@ -12,6 +12,7 @@ import lombok.Getter;
 public enum ErrorMsg {
 
   ERROR_DESCONOCIDO("0000", "Error desconocido, favor de reportarlo al administrador.", ErrorCause.CODIGO),
+  ERROR_PARSEO_DATA("0001", "Error de parseo de datos, favor de reportarlo al administrador.", ErrorCause.CODIGO),
   ERROR_DATOS_VACIOS("0001", "%s", ErrorCause.REGLANEGOCIO),
   ERROR_NO_DATOS_BUSQUEDA_USUARIOS("0002",
       "Error, debes de proporcionar al menos el id de usuario, correo, o nombre para la búsqueda",

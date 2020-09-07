@@ -7,9 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.dao.TransientDataAccessResourceException;
 import com.fercan.exception.constants.ErrorCause;
 import com.fercan.exception.constants.ErrorMsg;
 
@@ -38,73 +35,6 @@ class ExceptionHandlerTest {
     assertNotNull(fe);
     assertNotNull(fe.toString());
     assertEquals("Error Fercan", fe.getMensaje());
-    assertEquals(ErrorCause.CODIGO, fe.getCausa());
-  }
-
-  @Test
-  void shouldGetFercanExceptionOnFercanException() {
-    // when
-    FercanException fe = exceptionHandler.getFercanException(new NullPointerException());
-
-    // then
-    assertNotNull(fe);
-    assertNotNull(fe.toString());
-    assertEquals("Error desconocido, favor de reportarlo al administrador.", fe.getMensaje());
-    assertEquals(ErrorCause.CODIGO, fe.getCausa());
-  }
-
-  @Test
-  void shouldGetFercanExceptionOnError() {
-    // when
-    FercanException fe = exceptionHandler.getFercanException(ErrorMsg.ERROR_CIERRE_SESION);
-
-    // then
-    assertNotNull(fe);
-    assertNotNull(fe.toString());
-    assertEquals("Ocurrió un error al cerrar la sesión, favor de reportarlo al administrador.",
-        fe.getMensaje());
-    assertEquals(ErrorCause.CODIGO, fe.getCausa());
-  }
-
-  @Test
-  void shouldGetFercanExceptionOnDuplicateKey() {
-    // when
-    FercanException fe = exceptionHandler.getFercanException(new DuplicateKeyException("foo"));
-
-    // then
-    assertNotNull(fe);
-    assertNotNull(fe.toString());
-    assertEquals("Error, se quiso insertar algún dato duplicado en la base.", fe.getMensaje());
-    assertEquals(ErrorCause.REGLANEGOCIO, fe.getCausa());
-  }
-
-  @Test
-  void shouldGetFercanExceptionOnDataIntegrityViolation() {
-    // when
-    FercanException fe =
-        exceptionHandler.getFercanException(new DataIntegrityViolationException("msg"));
-
-    // then
-    assertNotNull(fe);
-    assertNotNull(fe.toString());
-    assertEquals(
-        "Error, algún id con llave foranea que se ha enviado es incorrecto "
-            + "o no existe, favor de reportarlo con el administrador del sistema.",
-        fe.getMensaje());
-    assertEquals(ErrorCause.CODIGO, fe.getCausa());
-  }
-
-  @Test
-  void shouldGetFercanExceptionOnTransientDataAccess() {
-    // when
-    FercanException fe = exceptionHandler
-        .getFercanException(new TransientDataAccessResourceException("TransientDataAccess"));
-
-    // then
-    assertNotNull(fe);
-    assertNotNull(fe.toString());
-    assertEquals("Error, query de la Base de datos incorrecto, favor de reportarlo con el "
-        + "administrador del sistema.", fe.getMensaje());
     assertEquals(ErrorCause.CODIGO, fe.getCausa());
   }
 

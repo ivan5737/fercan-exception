@@ -2,9 +2,7 @@ package com.fercan.exception;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.dao.TransientDataAccessResourceException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fercan.exception.constants.ErrorMsg;
 
 /**
@@ -41,7 +39,7 @@ public class ExceptionHandler extends RuntimeException {
    * @param e.
    * @return FercanException object.
    */
-  public FercanException getFercanException(Exception e) {
+  public FercanException getFercanException(Throwable e) {
     if (e instanceof FercanException) {
       return FercanException.class.cast(e);
     }
@@ -67,7 +65,7 @@ public class ExceptionHandler extends RuntimeException {
    * @param error.
    * @return FercanException object.
    */
-  public FercanException getFercanException(Exception e, ErrorMsg error) {
+  public FercanException getFercanException(Throwable e, ErrorMsg error) {
     return new FercanException(error.getCodigo(), error.getMensaje(), getStackTrace(e),
         error.getCausa());
   }
@@ -81,7 +79,7 @@ public class ExceptionHandler extends RuntimeException {
    * @param message.
    * @return FercanException object.
    */
-  public FercanException getFercanException(Exception e, ErrorMsg error, String message) {
+  public FercanException getFercanException(Throwable e, ErrorMsg error, String message) {
     return new FercanException(error.getCodigo(), message, getStackTrace(e), error.getCausa());
   }
 
@@ -91,16 +89,10 @@ public class ExceptionHandler extends RuntimeException {
    * @param e.
    * @return ErrorMsg object.
    */
-  private static ErrorMsg getMensaje(Exception e) {
+  private static ErrorMsg getMensaje(Throwable e) {
     ErrorMsg errorMsg = null;
-    if (e instanceof NullPointerException) {
-      errorMsg = ErrorMsg.ERROR_DESCONOCIDO;
-    } else if (e instanceof DuplicateKeyException) {
-      errorMsg = ErrorMsg.ERROR_LLAVE_UNICA;
-    } else if (e instanceof DataIntegrityViolationException) {
-      errorMsg = ErrorMsg.ERROR_LLAVE_FORANEA;
-    } else if (e instanceof TransientDataAccessResourceException) {
-      errorMsg = ErrorMsg.ERROR_SQL_QUERY;
+    if (e instanceof JsonProcessingException) {
+      errorMsg = ErrorMsg.ERROR_PARSEO_DATA;
     } else {
       errorMsg = ErrorMsg.ERROR_DESCONOCIDO;
     }
@@ -113,7 +105,7 @@ public class ExceptionHandler extends RuntimeException {
    * @param e.
    * @return String stack trace Object.
    */
-  private static String getStackTrace(Exception e) {
+  private static String getStackTrace(Throwable e) {
     if (e == null) {
       return "";
     }
