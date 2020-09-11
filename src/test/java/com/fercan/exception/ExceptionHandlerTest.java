@@ -2,11 +2,13 @@ package com.fercan.exception;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fercan.exception.constants.ErrorCause;
 import com.fercan.exception.constants.ErrorMsg;
 
@@ -35,6 +37,19 @@ class ExceptionHandlerTest {
     assertNotNull(fe);
     assertNotNull(fe.toString());
     assertEquals("Error Fercan", fe.getMensaje());
+    assertEquals(ErrorCause.CODIGO, fe.getCausa());
+  }
+
+  @Test
+  void shouldGetFercanExceptionOnJsonProcessingException() {
+    // when
+    FercanException fe = exceptionHandler.getFercanException(mock(JsonProcessingException.class));
+
+    // then
+    assertNotNull(fe);
+    assertNotNull(fe.toString());
+    assertEquals("Error de parseo de datos, favor de reportarlo al administrador.",
+        fe.getMensaje());
     assertEquals(ErrorCause.CODIGO, fe.getCausa());
   }
 
