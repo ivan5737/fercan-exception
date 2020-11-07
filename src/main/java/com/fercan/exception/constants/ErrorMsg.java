@@ -35,6 +35,8 @@ public enum ErrorMsg {
       ErrorCause.REGLANEGOCIO),
   ERROR_ID_USUAIRO_INCORRECTO("0010", "El id de usuario proporcionado es incorrecto.",
       ErrorCause.REGLANEGOCIO),
+  ERROR_NO_USUAIRO_ENCONTRADO("0011", "No se encontraron usuarios.",
+      ErrorCause.REGLANEGOCIO),
   ERROR_LLAVE_UNICA_CUSTOM("0015",
       "Se ha enviado un id de llave foranea que no existe para el campo (%s).",
       ErrorCause.REGLANEGOCIO),
