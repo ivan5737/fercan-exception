@@ -2,58 +2,110 @@ package com.fercan.exception;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
-import com.fercan.exception.constants.ErrorCause;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fercan.exception.constants.ErrorMsg;
 
+/**
+ * Exception handler class from the Fercan Web Services.
+ * 
+ * This class is called in the Fercan Web Services when a exception is throw, and its goal is build
+ * the FercanException object.
+ * 
+ * @author Gonzalo Ivan Lopez
+ *
+ */
 public class ExceptionHandler extends RuntimeException {
 
   private static final long serialVersionUID = 5074947088470243447L;
 
-  private static ExceptionHandler instance;
+  /**
+   * The variable INSTANCE that has the static final instance of the ExceptionHandler class.
+   */
+  private static final ExceptionHandler INSTANCE = new ExceptionHandler();
 
+  /**
+   * This method return the instance of this singleton class.
+   * 
+   * @return the static final instance of this class.
+   */
   public static final ExceptionHandler getInstance() {
-    if (instance == null) {
-      instance = new ExceptionHandler();
+    return INSTANCE;
+  }
+
+  /**
+   * This method get the exception thrown in the Fercan Web Service and with that information
+   * generate the FercanException object.
+   * 
+   * @param e.
+   * @return FercanException object.
+   */
+  public FercanException getFercanException(Throwable e) {
+    if (e instanceof FercanException) {
+      return FercanException.class.cast(e);
     }
-    return instance;
-  }
-
-  public static FercanException getFercanException(ErrorMsg error) {
-    return getFercanException(null, error);
-  }
-
-  public static FercanException getFercanException(Exception e) {
     return getFercanException(e, getMensaje(e));
   }
 
-  public static FercanException getFercanException(Exception e, ErrorMsg error) {
-    return getFercanException(e, error, error.getCausa());
+  /**
+   * This method get the ErrorMsg sent from the Fercan Web Service and generate the FercanException
+   * object.
+   * 
+   * @param error.
+   * @return FercanException object.
+   */
+  public FercanException getFercanException(ErrorMsg error) {
+    return getFercanException(null, error);
   }
 
-  public static FercanException getFercanException(Exception e, ErrorMsg error, ErrorCause causa) {
-    return new FercanException(error.getCodigo(), error.getMensaje(), getStackTrace(e), causa);
+  /**
+   * This method get the Exception and ErrorMsg sent from the Fercan Web Service and generate the
+   * FercanException object.
+   * 
+   * @param e.
+   * @param error.
+   * @return FercanException object.
+   */
+  public FercanException getFercanException(Throwable e, ErrorMsg error) {
+    return new FercanException(error.getCodigo(), error.getMensaje(), getStackTrace(e),
+        error.getCausa());
   }
 
-  public static FercanException getFercanException(Exception e, String codigo, String mensaje,
-      ErrorCause causa) {
-    return new FercanException(codigo, mensaje, getStackTrace(e), causa);
+  /**
+   * This method get the Exception, ErrorMsg and custom message sent from the Fercan Web Service and
+   * generate the FercanException object.
+   * 
+   * @param e.
+   * @param error.
+   * @param message.
+   * @return FercanException object.
+   */
+  public FercanException getFercanException(Throwable e, ErrorMsg error, String message) {
+    return new FercanException(error.getCodigo(), message, getStackTrace(e), error.getCausa());
   }
 
-  private static ErrorMsg getMensaje(Exception e) {
-    if (e instanceof NullPointerException) {
-      return ErrorMsg.ERROR_DESCONOCIDO;
-    } else if (e instanceof DuplicateKeyException) {
-      return ErrorMsg.ERROR_LLAVE_UNICA;
-    } else if (e instanceof DataIntegrityViolationException) {
-      return ErrorMsg.ERROR_LLAVE_FORANEA;
+  /**
+   * Get the ErrorMsg object depending of the exception type sent.
+   * 
+   * @param e.
+   * @return ErrorMsg object.
+   */
+  private static ErrorMsg getMensaje(Throwable e) {
+    ErrorMsg errorMsg = null;
+    if (e instanceof JsonProcessingException) {
+      errorMsg = ErrorMsg.ERROR_PARSEO_DATA;
     } else {
-      return ErrorMsg.ERROR_DESCONOCIDO;
+      errorMsg = ErrorMsg.ERROR_DESCONOCIDO;
     }
+    return errorMsg;
   }
 
-  private static String getStackTrace(Exception e) {
+  /**
+   * this method generate the stacktrace exception from the Exception sent.
+   * 
+   * @param e.
+   * @return String stack trace Object.
+   */
+  private static String getStackTrace(Throwable e) {
     if (e == null) {
       return "";
     }
