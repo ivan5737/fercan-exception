@@ -1,5 +1,6 @@
 package com.fercan.exception;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -73,6 +74,7 @@ public class FercanException extends RuntimeException {
     response.put("causa", this.causa.toString());
     response.put("codigo", this.codigo);
     response.put("error_id", this.uuid);
+    response.put("fecha", Instant.now().toString());
     return response;
   }
 
