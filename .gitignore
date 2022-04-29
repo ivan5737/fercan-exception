@@ -73,6 +73,9 @@ dist/
 nbdist/
 .nb-gradle/
 
+# VBCode specific files/directories
+.vscode
+
 # Other files
 *.sw?
 .#*
