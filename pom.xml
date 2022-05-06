@@ -15,14 +15,13 @@
 		<maven.surefire.plugin.version>2.22.0</maven.surefire.plugin.version>
 		<maven.jacoco.plugin.version>0.8.5</maven.jacoco.plugin.version>
 		<org.mockito.version>3.5.7</org.mockito.version>
-		<org.springframework.version>5.2.8.RELEASE</org.springframework.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>${org.springframework.version}</version>
+			<version>5.2.8.RELEASE</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
