@@ -14,14 +14,13 @@
 		<java.version>11</java.version>
 		<maven.surefire.plugin.version>2.22.0</maven.surefire.plugin.version>
 		<maven.jacoco.plugin.version>0.8.5</maven.jacoco.plugin.version>
-		<org.mockito.version>3.5.7</org.mockito.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>5.2.8.RELEASE</version>
+			<version>5.3.19</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -51,19 +50,19 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>
-			<version>${org.mockito.version}</version>
+			<version>3.5.7</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>${org.mockito.version}</version>
+			<version>3.5.7</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-inline</artifactId>
-			<version>${org.mockito.version}</version>
+			<version>3.5.7</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
